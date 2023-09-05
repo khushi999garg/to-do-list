@@ -1,10 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-import route from "./routes/api.js";
+import route, { apiProtected } from "./routes/api.js";
 import { DB_CONNECT } from "./utils/constants.js";
+import AuthMiddleware from "./middlewares/AuthMiddleware.js";
 
 const app = express();
-
 
 const PORT = 8080;
 
@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/', route);
+app.use('/api/', AuthMiddleware, apiProtected);
 
 
 const main = async () => {
